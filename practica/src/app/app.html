@@ -3,26 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Practica de Angular</title>
 </head>
 <body>
   <h1>Pregunta 1</h1>
-  <input [(ngModel)]="nuevoUsuario.nombre" placehoder="Ingresa Usuario" type="text">
-  <input [(ngModel)]="nuevoUsuario.contrasena" placehoder="Ingresa Contraseña" type="password">
+  <input [(ngModel)]="nuevoUsuario.nombre" placeholder="Ingresa Usuario" type="text">
+  <input [(ngModel)]="nuevoUsuario.contrasena" placeholder="Ingresa Contraseña" type="password">
   <button (click)="registrar">Registrar Datos</button>
 
-  <table>
+  <table border="1" width="100%">
     <thead>
         <th>Usuario</th>
         <th>Contraseña</th>
         <th>Accion</th>
     </thead>
     <tbody>
-      <tr *ngFor="let c of usuarios">
+      <tr *ngFor="let c of usuarios; let i=index">
         <td>{{c.nombre}}</td>
         <td>{{c.contrasena}}</td>
         <td>
-          <button>
+          <button (click)="editar(i)">
+            Actualizar
+          </button>
+          <button (click)="eliminar(i)">
             Eliminar
           </button>
         </td>

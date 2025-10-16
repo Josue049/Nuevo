@@ -10,18 +10,45 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './app.css'
 })
 export class App {
-  //protected readonly title = signal('practica');
-  usuarios:{nombre: string, contrasena: string}[]=[];
+
+ usuarios: { nombre: string; contrasena: string }[] = [
+    { nombre: 'alice', contrasena: 'pass123' },
+    { nombre: 'bob', contrasena: 'qwerty' },
+    { nombre: 'carla', contrasena: 'secret' }
+  ];
 
   nuevoUsuario={
     nombre:'',
     contrasena:'',
   }
 
+  editIndex: number | null=null;
+
   registrar(){
-    if(this.nuevoUsuario.nombre.trim() && this.nuevoUsuario.contrasena.trim()){
-      this.usuarios.push({...this.nuevoUsuario});
-      this.nuevoUsuario={nombre:'', contrasena:''};
+    // Si alguno de los campos está vacío, no hacemos nada
+    if (!this.nuevoUsuario.nombre.trim() || !this.nuevoUsuario.contrasena.trim()) {
+      return;
     }
+
+    if (this.editIndex === null) {
+      // Nuevo usuario
+      this.usuarios.push({ ...this.nuevoUsuario });
+    } else {
+      // Actualizar usuario existente
+      this.usuarios[this.editIndex] = { ...this.nuevoUsuario };
+    }
+
+    // Limpiar formulario y estado de edición
+    this.nuevoUsuario = { nombre: '', contrasena: '' };
+    this.editIndex = null;
+  }
+
+  editar(index: number){
+    this.nuevoUsuario={...this.usuarios[index]};
+    this.editIndex=index;
+  }
+
+  eliminar(index: number){
+    this.usuarios.splice(index,1);
   }
 }
